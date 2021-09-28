@@ -1,4 +1,6 @@
-/* .update{
+.update{
     visibility:hidden;
 }
- */
+.addTranssection{
+    visibility:visible;
+}
