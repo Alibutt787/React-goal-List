@@ -21,8 +21,9 @@ setsgoals(goals.filter((item,ind) => ind !== e));
       const update=e=>{
         e.preventDefault();
         if(input!==''){
-     setsgoals([...goals, goals[goals1].title=input])}
-     setinput('');
+          goals[goals1].title=input;
+        setsgoals([...goals])}
+        setinput('');
 
       
           }
