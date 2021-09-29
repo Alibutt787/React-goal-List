@@ -1,6 +1,15 @@
 .update{
-    visibility:hidden;
+    display: inline;
+  visibility:hidden;
 }
 .addTranssection{
     visibility:visible;
 }
+.input {
+    
+    transition: 'width 0.4s ease-in-out';
+    height: 38px;
+    border-radius: 8px;
+    width: 20%;
+  }
+ 

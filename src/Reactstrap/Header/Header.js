@@ -1,76 +1,119 @@
-import React,{useState} from 'react';
-import styles from './Header.module.css'; 
+import React, { useState } from "react";
+import styles from "./Header.module.css";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import 'bootstrap/dist/css/bootstrap.css';
+import { Button, Container } from 'reactstrap';
+import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit , faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import TableGoals from "./table";
 const Header = () => {
   // Initial goalList
-const titles = [ ];
-const [input, setinput] = useState('');
-const [goals, setsgoals] = useState(titles);
-const [goals1, setsgoals1] = useState([]);
-//AddGoal
-const addTranssection = e=>{
-e.preventDefault();
-if(input!==''){
-goals.push({title:input})
-}setinput('');  }
-//Delete Goal
-const del=(e)=>{
-setsgoals(goals.filter((item,ind) => ind !== e));
-  }
+  const titles = [];
+  const [input, setinput] = useState("");
+  const [goals, setsgoals] = useState(titles);
+  const [goals1, setsgoals1] = useState([]);
+  //AddGoal
+  const addTranssection = (e) => {
+    e.preventDefault();
+    if (input !== "") {
+      goals.push({ title: input });
+      Toasty("Your Goal is Added");
+    }
+    setinput("");
+  };
+  //Delete Goal
+  const del = (e) => {
+    setsgoals(goals.filter((item, ind) => ind !== e));
+    Toasty("Your Goal is Deleted Successfully");
+  };
   //Edit Goal
-  const edit=(e,p)=>{
-    setinput(e.title)
+  const edit = (e, p) => {
+    setinput(e.title);
     setsgoals1(p);
-   const pp= document.getElementById('pak').style.visibility="visible"
-   document.getElementById('pak1').style.display="none"
-    console.log(pp);
-      }
-      //Update Goal
-      const update=e=>{
-        e.preventDefault();
-        if(input!==''){
-          goals[goals1].title=input;
-        setsgoals([...goals])}
-        setinput('');
-        document.getElementById('pak').style.visibility="hidden" 
-        document.getElementById('pak1').style.display="inline" }
+    document.getElementById("pak").style.visibility = "visible";
+    document.getElementById("pak1").style.display = "none";
+  };
+  //Update Goal
+  const update = (e) => {
+    e.preventDefault();
+    if (input !== "") {
+      goals[goals1].title = input;
+      setsgoals([...goals]);
+    }
+    setinput("");
+    document.getElementById("pak").style.visibility = "hidden";
+    document.getElementById("pak1").style.display = "inline";
+    Toasty("Your Goal is Update Successfully");
+  };
+  //Updatet-Delete
+  const updatedelete = (e) => {
+    e.preventDefault();
+    document.getElementById("pak").style.visibility = "hidden";
+    setinput("");
+    document.getElementById("pak1").style.display = "inline";
+    Toasty("Your Delete the Updated Goal");
+  };
+  //function Toast
+  function Toasty(e) {
+    toast.info(`${e}`, {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  }
   return (
-    <div style={{marginTop:'50px'}}>
-    <form >
-         <input name="firstName" placeholder="Your Title" value={input}   onChange={(e) => setinput(e.target.value)} />
-            <button  id='pak1' className={styles.addTranssection} onClick={addTranssection} >add transsection</button>
-            <button id='pak' className={styles.update} onClick={update} >Update</button>
-            </form>   
-       <br/>  
-       <br/>  
-       <br/>  
-  <table style={{
-  width: '100%',
-  borderCollapse: 'collapse',
-  border: '1px solid black'
-}}>
- <thead>
-   <tr>
-     <th style={{ border: '1px solid black'}}>Title</th>
-     <th style={{ border: '1px solid black'}}>Action</th>
-     </tr>
- </thead>
- <tbody > 
- {goals.map((value, ind) => {
-          return (
-            <tr key={ind}>
-             <td style={{ border: '1px solid black'}}>  {value.title}</td>
-             <td style={{ border: '1px solid black'}}> 
-             <button onClick={()=>{edit(value,ind)}}>Edit</button>
-             <button onClick={()=>{del(ind)}}>Delete</button>
-             </td>
-            </tr>
-          )
-        })}
- </tbody>
- <tfoot></tfoot>
-</table>
- </div>
+    <Container style={{ marginTop: "50px" }} className="themed-container">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        Transition={Zoom}
+      />
+      <form>
+        <input className={styles.input}
+          name="firstName"
+          placeholder="Your Title"
+          value={input}
+          onChange={(e) => setinput(e.target.value)} />
+           
+
+        <Button
+          id="pak1" color="primary"
+          className={styles.addTranssection} 
+          onClick={addTranssection}  >
+        Save   
+        </Button>
+        <div id="pak" className={styles.update}>
+          <Button
+          color="warning"
+          onClick={update}>
+ <FontAwesomeIcon  icon={faEdit} size="lg" />
+        </Button>
+        <Button
+         color="danger"
+          onClick={updatedelete}
+        >
+ <FontAwesomeIcon  icon={faTrashAlt } size="lg" />
+        </Button>
+         
+        </div>
+      </form>
+      <br />
+      <br />
+      <br />
+     <TableGoals  goals={goals} edit={edit} del={del} />
+    </Container>
   );
-  
 };
 export default Header;
