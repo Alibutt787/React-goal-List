@@ -3,7 +3,8 @@ import Header from './Reactstrap/Header/Header';
 
 function App() {
   return (
-    <div className="App">
+    <div >
+         <h1 style={{textAlign:'center'}}><b>Goal List</b></h1>
    <Header/>
     </div>
   );

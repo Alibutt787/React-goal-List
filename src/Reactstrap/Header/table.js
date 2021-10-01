@@ -17,8 +17,8 @@ const TableGoals = (props) => {
           {props.goals.map((value, ind) => {
             return (
               <tr key={ind}>
-                <td style={{ border: "1px solid black" }}> {value.title}</td>
-                <td style={{ border: "1px solid black" }}>
+                <td> {value.title}</td>
+                <td >
                   <Button color="warning"
                   onClick={() => {props.edit(value, ind);}} ><FontAwesomeIcon  icon={faEdit } size="lg" /> </Button>
                   <Button color="danger"
