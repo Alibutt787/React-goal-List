@@ -1,38 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus , faTrashAlt } from '@fortawesome/free-solid-svg-icons'
-import { Button,Form,FormGroup,Row,Col,Input} from 'reactstrap';
+import { Button,FormGroup,Row,Col,Input} from 'reactstrap';
 
-function App1() {
-  const [inputList, setInputList] = useState([{ firstName: "" }]);
+function App1(props) {
+  // const [inputList, setInputList] = useState([{ firstName: "" }]);
  
   // handle input change
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
-    const list = [...inputList];
+    const list = [...props.inputList];
     list[index][name] = value;
-    setInputList(list);
+   props.setInputList(list);
   };
  
   // handle click event of the Remove button
   const handleRemoveClick = index => {
-    const list = [...inputList];
+    const list = [...props.inputList];
     list.splice(index, 1);
-    setInputList(list);
+    props.setInputList(list);
   };
  
   // handle click event of the Add button
   const handleAddClick = () => {
-    setInputList([...inputList, { firstName: "" }]);
+    props.setInputList([...props.inputList, { firstName: "" }]);
   };
  
   return (
     <div  >
-     <span >Goal List</span>
-      {inputList.map((x, i) => {
+     <span >Goal List</span>  <div  > 
+      { props.inputList.map((x, i) => {
         return (
-           <Form>
-            <Row form>
+       
+            <Row form  key={i}>
         <Col md={6}>
           <FormGroup  >
             <Input type="text"  placeholder=""     name="firstName"
@@ -41,18 +41,18 @@ function App1() {
          </FormGroup>
          </Col>
          <Col  className="ml-2 ">
-         {inputList.length - 1 === i && <Button color='success' className="mr-2 " onClick={handleAddClick}>
+         { props.inputList.length - 1 === i && <Button color='success' className="mr-2 " onClick={handleAddClick}>
  <FontAwesomeIcon  icon={faPlus} size="lg" /></Button> } 
-              {inputList.length !== 1 && <Button  color='danger'
+              { props.inputList.length !== 1 && <Button  color='danger'
                 onClick={() => handleRemoveClick(i)}> <FontAwesomeIcon  icon={faTrashAlt} size="lg" /></Button>}
         
             </Col>
             </Row>
-            </Form>
+          
          
         );
       })}
-      {/* <div style={{ marginTop: 20 }}>{JSON.stringify(inputList)}</div> */}
+      </div>
     </div>
   );
 }

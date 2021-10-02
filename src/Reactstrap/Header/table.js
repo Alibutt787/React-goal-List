@@ -9,6 +9,7 @@ const TableGoals = (props) => {
       <thead>
         <tr>
           <th>Titles</th>
+          <th>Goal List</th>
           <th>Actions</th>
        
         </tr>
@@ -18,6 +19,10 @@ const TableGoals = (props) => {
             return (
               <tr key={ind}>
                 <td> {value.title}</td>
+              
+                <td> 
+           <ul> {value.firstName.map((ele,index)=> {return  <li key={index}>{ele.firstName}</li>} )} </ul> 
+                   </td>
                 <td >
                   <Button color="warning"
                   onClick={() => {props.edit(value, ind);}} ><FontAwesomeIcon  icon={faEdit } size="lg" /> </Button>

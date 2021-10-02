@@ -16,6 +16,8 @@ const Header = () => {
   const [goals1, setsgoals1] = useState([]);
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
+  const [inputList, setInputList] = useState([{ firstName: "" }]);
+
   //AddGoal
   const addTranssection = (e) => {
     e.preventDefault();
@@ -23,8 +25,9 @@ const Header = () => {
     var inputTest=regex.test(input)
     if(inputTest){
     if (input !== "") {
-      goals.push({ title: input });
-      Toasty("Your Goal is Added");
+      goals.push({ title: input ,firstName:inputList});
+      setInputList([{ firstName: "" }]);
+            Toasty("Your Goal is Added");
     } } else if(inputTest===false && input !=="") { Toasty("Special Character are not Allowed")}
     setinput("");
   };
@@ -98,7 +101,8 @@ const Header = () => {
           </FormGroup>
         </Col>
       </Row>
-      <App1/>
+      <App1 setInputList={setInputList}  inputList={inputList}/>
+    
         <Button
           id="pak1" color="primary"
           className={styles.addTranssection} 
@@ -123,13 +127,15 @@ const Header = () => {
       <br />
       <br />
       <br />
-     <TableGoals  goals={goals} edit={edit} del={del} />
+     <TableGoals  goals={goals} edit={edit} del={del} inputList={inputList} />
      <div>
       <Modal isOpen={modal} toggle={toggle} >
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </ModalBody>
+         { goals.map((item,ind)=>{return <div key={ind}><input type="text" value={item.title} />
+         {item.firstName.map((e,ing)=>{ return <input key={e} type="text" value={e.firstName}/>})}
+         </div>})}
+           </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
