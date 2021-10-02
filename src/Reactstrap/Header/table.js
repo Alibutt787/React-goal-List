@@ -21,7 +21,7 @@ const TableGoals = (props) => {
                 <td> {value.title}</td>
               
                 <td> 
-           <ul> {value.firstName.map((ele,index)=> {return  <li key={index}>{ele.firstName}</li>} )} </ul> 
+           <ul> {value.Name.map((ele,index)=> { if(ele.firstName!==""){return <li key={index}>{ele.firstName}</li>}} )} </ul> 
                    </td>
                 <td >
                   <Button color="warning"

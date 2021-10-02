@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import styles from "./Header.module.css";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import 'bootstrap/dist/css/bootstrap.css';
-import { Button, Container ,Modal, ModalHeader, ModalBody, ModalFooter,Form,Row,Col,FormGroup,Label,Input} from 'reactstrap';
+import { Button, Container,Modal, ModalHeader, ModalBody, ModalFooter ,Form,Row,Col,FormGroup,Label,Input} from 'reactstrap';
 import "react-toastify/dist/ReactToastify.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit , faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import TableGoals from "./table";
 import App1 from "./dynamicInput";
 const Header = () => {
-  // Initial goalList
+  // Initial goalList  
   const titles = [];
   const [input, setinput] = useState("");
   const [goals, setsgoals] = useState(titles);
@@ -17,7 +17,6 @@ const Header = () => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [inputList, setInputList] = useState([{ firstName: "" }]);
-
   //AddGoal
   const addTranssection = (e) => {
     e.preventDefault();
@@ -25,11 +24,11 @@ const Header = () => {
     var inputTest=regex.test(input)
     if(inputTest){
     if (input !== "") {
-      goals.push({ title: input ,firstName:inputList});
-      setInputList([{ firstName: "" }]);
+      goals.push({ title: input ,Name:inputList});
+     
             Toasty("Your Goal is Added");
     } } else if(inputTest===false && input !=="") { Toasty("Special Character are not Allowed")}
-    setinput("");
+    setinput(""); setInputList([{ firstName: "" }]);
   };
   //Delete Goal
   const del = (e) => {
@@ -39,8 +38,10 @@ const Header = () => {
   //Edit Goal
   const edit = (e, p) => {
     setinput(e.title);
+    setInputList(goals[p].Name);
     setsgoals1(p);
-    toggle();
+    
+     toggle();
     document.getElementById("pak").style.visibility = "visible";
     document.getElementById("pak1").style.display = "none";
   };
@@ -49,9 +50,12 @@ const Header = () => {
     e.preventDefault();
     if (input !== "") {
       goals[goals1].title = input;
+      goals[goals1].Name=inputList;
+      console.log(   goals[goals1]);
       setsgoals([...goals]);
+      // goals.push({ title: input ,Name:inputList});
     }
-    setinput("");
+    setinput("");  setInputList([{ firstName: "" }]);
     document.getElementById("pak").style.visibility = "hidden";
     document.getElementById("pak1").style.display = "inline";
     Toasty("Your Goal is Update Successfully");
@@ -60,7 +64,7 @@ const Header = () => {
   const updatedelete = (e) => {
     e.preventDefault();
     document.getElementById("pak").style.visibility = "hidden";
-    setinput("");
+    setinput(""); setInputList([{ firstName: "" }]);
     document.getElementById("pak1").style.display = "inline";
     Toasty("Your Delete the Updated Goal");
   };
@@ -132,13 +136,33 @@ const Header = () => {
       <Modal isOpen={modal} toggle={toggle} >
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
-         { goals.map((item,ind)=>{return <div key={ind}><input type="text" value={item.title} />
-         {item.firstName.map((e,ing)=>{ return <input key={e} type="text" value={e.firstName}/>})}
-         </div>})}
+     
+         <Form>
+      <Row form>
+        <Col md={6}>
+          <FormGroup>
+            <Label for="text">Enter Goal</Label>
+            <Input type="text" name="input" id="text"  value={input}
+          onChange={(e) => setinput(e.target.value)}  />
+          </FormGroup>
+        </Col>
+      </Row>
+      <App1 setInputList={setInputList}  inputList={inputList} />   
+      </Form>
+         
            </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
+        <Button
+          color="warning"
+          onClick={update}>
+ <FontAwesomeIcon  icon={faEdit} size="lg" />
+        </Button>
+        <Button
+         color="danger"
+          onClick={toggle}
+        >
+ <FontAwesomeIcon  icon={faTrashAlt } size="lg" />
+        </Button>
         </ModalFooter>
       </Modal>
     </div>
