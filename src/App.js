@@ -6,6 +6,9 @@ function App() {
     <div >
          <h1 style={{textAlign:'center'}}><b>Goal List</b></h1>
    <Header/>
+
+
+   
     </div>
   );
 }
